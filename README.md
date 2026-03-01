@@ -1,0 +1,5 @@
+# SystemLabolatoriumDiagnostycznegoUBB
+
+Wymagania funkcjonalne
+
+Wymagania niefunkcjonalne
