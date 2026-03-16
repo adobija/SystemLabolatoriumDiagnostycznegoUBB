@@ -1,4 +1,4 @@
-package ubb._sem.izi.skibs._b.SystemLabolatoriumDiagnostycznego;
+package ubb.izi.skibs.IIb.SystemLabolatoriumDiagnostycznegoUBB;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
