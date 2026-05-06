@@ -1,0 +1,96 @@
+/* RESET I TŁO WIDEO */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden; /* Blokujemy przewijanie na głównej */
+}
+
+.video-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.video-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Ciemny filtr na film */
+}
+
+/* KONTENER GŁÓWNY */
+.portal-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.main-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.main-header h1 {
+    font-size: 3rem;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+}
+
+/* SIATKA KAFELKÓW */
+.dashboard-grid {
+    display: flex;
+    gap: 20px;
+    max-width: 1000px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.1); /* Efekt szkła */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 40px 30px;
+    text-align: center;
+    border-radius: 15px;
+    text-decoration: none;
+    color: white;
+    width: 220px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-10px);
+    border-color: #11caa0;
+}
+
+.card i {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: #11caa0; /* Miętowy kolor akcentu */
+}
+
+.card h3 {
+    margin: 10px 0;
+    font-size: 1.5rem;
+}
+
+.card p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
