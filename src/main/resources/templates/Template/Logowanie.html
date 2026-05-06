@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie | LabSystem</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/Logowanie.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<div class="login-page">
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fas fa-user-circle"></i>
+            <h2>Panel Logowania</h2>
+            <p>Wprowadź swoje dane, aby przejść do systemu</p>
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="input-group">
+                <label for="email">Adres E-mail</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="username" placeholder="twoj@email.pl" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Hasło</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/forgot-password}" class="forgot-pass">Zapomniałeś hasła?</a>
+            </div>
+
+            <button type="submit" class="login-submit">Zaloguj się</button>
+        </form>
+
+        <div class="back-home">
+            <a th:href="@{/}"><i class="fas fa-arrow-left"></i> Nie masz jeszcze konta? - powrót do portalu</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

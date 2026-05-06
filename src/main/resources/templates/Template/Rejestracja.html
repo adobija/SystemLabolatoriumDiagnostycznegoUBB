@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rejestracja | LabSystem</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/Rejestracja.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<div class="register-page">
+    <div class="register-card">
+        <div class="register-header">
+            <i class="fas fa-user-plus"></i>
+            <h2>Nowe Konto</h2>
+            <p>Dołącz do systemu LabSystem</p>
+        </div>
+
+        <form th:action="@{/register}" method="post">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="firstName">Imię</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="firstName" name="firstName" placeholder="Jan" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="lastName">Nazwisko</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="lastName" name="lastName" placeholder="Kowalski" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="pesel">PESEL</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="pesel" name="pesel" placeholder="00000000000" maxlength="11" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="gender">Płeć</label>
+                    <div class="input-wrapper select-wrapper">
+                        <i class="fas fa-venus-mars"></i>
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected>Wybierz...</option>
+                            <option value="M">Mężczyzna</option>
+                            <option value="K">Kobieta</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="register-submit">Utwórz konto</button>
+        </form>
+
+        <div class="login-prompt">
+            Masz już konto? <a th:href="@{/login}">Zaloguj się</a>
+        </div>
+
+        <div class="back-home">
+            <a th:href="@{/}"><i class="fas fa-arrow-left"></i> Powrót do portalu</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
