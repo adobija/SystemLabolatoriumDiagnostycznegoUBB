@@ -33,5 +33,44 @@ public class Uzytkownik {
         this.rola = rola;
     }
 
-    // gettery/settery
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getHasloHash() {
+        return hasloHash;
+    }
+
+    public void setHasloHash(String hasloHash) {
+        this.hasloHash = hasloHash;
+    }
+
+    public Rola getRola() {
+        return rola;
+    }
+
+    public void setRola(Rola rola) {
+        this.rola = rola;
+    }
+
+    public LocalDateTime getDataUtworzenia() {
+        return dataUtworzenia;
+    }
+
+    public void setDataUtworzenia(LocalDateTime dataUtworzenia) {
+        this.dataUtworzenia = dataUtworzenia;
+    }
+// gettery/settery
 }
