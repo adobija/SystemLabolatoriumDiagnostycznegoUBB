@@ -12,7 +12,7 @@ public class Uzytkownik {
     @Column(name = "id_uzytkownika")
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 255)
+    @Column(name = "email", nullable = false, unique = true, length = 255)
     private String email;
 
     @Column(name = "haslo_hash", nullable = false, length = 255)
