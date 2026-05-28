@@ -1,5 +1,6 @@
 package ubb.izi.skibs.IIb.SystemLabolatoriumDiagnostycznegoUBB.security;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,8 +23,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/css/**", "/js/**", "/images/**").permitAll()
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                        .requestMatchers("/login", "/register", "/css/**", "/js/**", "/images/**", "/assets/**", "/favicon.ico").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/lekarz/**").hasAnyRole("ADMIN", "LEKARZ")
                         .requestMatchers("/pacjent/**").hasAnyRole("ADMIN", "PACJENT")
