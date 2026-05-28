@@ -1,0 +1,67 @@
+/* 1. DEFINICJA ZMIENNYCH - Przyciemniona paleta kolorów */
+:root {
+    --primary-color: #002d4d;    /* Głęboki, ciemny granat */
+    --accent-color: #0d9b7a;     /* Ciemniejsza, nasycona mięta */
+    --text-dark: #1a1a1a;        /* Prawie całkowita czerń dla tekstu */
+    --text-light: #444444;       /* Ciemniejszy szary dla opisów */
+    --bg-light: #e8eceb;         /* Nieco ciemniejsze, betonowe tło */
+    --white: #ffffff;
+    --error-red: #a82424;        /* Ciemniejsza czerwień ostrzegawcza */
+}
+
+/* 2. RESET I BAZA */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Zwiększona bazowa czcionka z 16px na 18px */
+    font-size: 18px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.7;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 3. TYPOGRAFIA - Większe nagłówki */
+h1 { font-size: 2.5rem; color: var(--primary-color); font-weight: 800; }
+h2 { font-size: 2rem; color: var(--primary-color); font-weight: 700; }
+h3 { font-size: 1.5rem; color: var(--primary-color); font-weight: 700; }
+
+a {
+    text-decoration: none;
+    transition: 0.3s;
+    font-weight: 600; /* Pogrubione linki dla lepszej widoczności */
+}
+
+/* 4. POMOCNICZE KLASY */
+.text-center { text-align: center; }
+.mt-20 { margin-top: 25px; } /* Zwiększone marginesy dla większej czcionki */
+.mb-20 { margin-bottom: 25px; }
+
+/* 5. GŁÓWNE PRZYCISKI - Większe i bardziej wyraźne */
+.btn-base {
+    display: inline-block;
+    padding: 14px 28px; /* Powiększone przyciski */
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Delikatny cień dla głębi */
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}

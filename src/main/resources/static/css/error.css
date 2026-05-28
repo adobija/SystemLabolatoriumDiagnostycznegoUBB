@@ -1,0 +1,95 @@
+/* GŁÓWNY WRAPPER */
+.error-page-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #001a2e 0%, #000000 100%);
+    overflow: hidden;
+}
+
+/* KONTENER GRUPUJĄCY */
+.relative-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 1100px; /* Zwiększony dystans całego zestawu */
+}
+
+/* PASEK Z WIDEO PO LEWEJ */
+.video-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Odstęp między wideo */
+    z-index: 15;
+}
+
+/* STYL OKIEN WIDEO */
+.video-window {
+    border: 3px solid var(--primary-color);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* Powiększona Serwerownia */
+.work-view {
+    width: 350px;
+}
+
+/* Powiększony Coding pod spodem */
+.coding-view {
+    width: 320px;
+    margin-left: 10px; /* Lekkie przesunięcie dla asymetrii */
+}
+
+.video-window video {
+    width: 100%;
+    display: block;
+}
+
+.video-label {
+    background: var(--primary-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 6px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* KARTA BŁĘDU - PRZESUNIĘTA NA PRAWO */
+.error-box {
+    background: rgba(20, 20, 20, 0.9);
+    padding: 50px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    width: 480px;
+    margin-left: 60px; /* TO PRZESUWA KARTĘ W PRAWO */
+    z-index: 10;
+}
+
+.error-code {
+    font-size: 6rem;
+    font-weight: 900;
+    color: var(--accent-color);
+    line-height: 1;
+}
+
+.funny-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin: 20px 0;
+}
+
+.funny-text {
+    font-size: 1rem;
+    color: #bbb;
+}
