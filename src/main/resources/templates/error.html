@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Błąd | LabSystem</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<div class="error-page-wrapper">
+    <div class="relative-container">
+
+        <div class="video-sidebar">
+            <div class="video-window work-view">
+                <div class="video-label">Podgląd z serwerowni...</div>
+                <video autoplay muted loop playsinline>
+                    <source th:src="@{/video/404/404-praca.mp4}" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="video-window coding-view">
+                <div class="video-label">Status prac: Tempo x2</div>
+                <video autoplay muted loop playsinline id="codingVideo">
+                    <source th:src="@{/video/404/404-cooding.mp4}" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <div class="error-box">
+            <h1 class="error-code" th:text="${status}">404</h1>
+            <p class="funny-title">Witaj przyjacielu, wydaje mi się, że głęboko zabłądziłeś?</p>
+            <p class="funny-text">
+                Ta strona nie istnieje? <strong>JESZCZE</strong> nie istnieje! <br>
+                Uwierz, że malutkie rączki dzielnie pracują nad stworzeniem tej strony...
+            </p>
+            <a th:href="@{/}" class="btn-base btn-primary">
+                <i class="fas fa-home"></i> Wróć do portalu
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        const vid = document.getElementById('codingVideo');
+        if (vid) vid.playbackRate = 2.0;
+    };
+</script>
+</body>
+</html>

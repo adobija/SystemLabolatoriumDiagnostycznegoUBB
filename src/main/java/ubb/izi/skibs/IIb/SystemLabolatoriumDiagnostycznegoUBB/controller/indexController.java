@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class indexController {
 
     @GetMapping("/")
-    public String index()
-    {
-        return "indexTemplate/index";
+    public String showMainPortal() {
+        return "Template/SG";
     }
 }

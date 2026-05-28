@@ -1,0 +1,127 @@
+.login-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #003264 0%, #005088 100%); /* Ciemnoniebieski gradient */
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-header i {
+    font-size: 4rem;
+    color: #005088;
+    margin-bottom: 15px;
+}
+
+.login-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.login-header p {
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+/* INPUTY */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+.input-wrapper input:focus {
+    border-color: #005088;
+}
+
+/* AKCJE */
+.form-actions {
+    text-align: right;
+    margin-bottom: 25px;
+}
+
+.forgot-pass {
+    font-size: 0.85rem;
+    color: #005088;
+    text-decoration: none;
+}
+
+.login-submit {
+    width: 100%;
+    padding: 14px;
+    background: #005088;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-submit:hover {
+    background: #11caa0;
+}
+
+.login-footer {
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.login-footer a {
+    color: #005088;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.back-home {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.back-home a {
+    color: #999;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
