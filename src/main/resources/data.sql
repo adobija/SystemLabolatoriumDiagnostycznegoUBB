@@ -211,8 +211,8 @@ CREATE TABLE LogZdarzen (
 
 INSERT INTO Rola (kod, nazwa) VALUES
  ('ADMIN', 'Administrator systemu'),
- ('LAB', 'Pracownik laboratorium'),
- ('LEKARZ', 'Lekarz');
+ ('LEKARZ', 'Pracownik laboratorium'),
+ ('PACJENT', 'Pacjent');
 
 INSERT INTO Plec (kod, opis) VALUES
  ('M', 'Mężczyzna'),
@@ -241,15 +241,15 @@ INSERT INTO TypMaterialu (kod, opis) VALUES
 
 
 INSERT INTO Uzytkownik (email, haslo_hash, id_rola) VALUES
- ('admin@lab.pl', 'hash_admin', 1),
- ('laborant1@lab.pl', 'hash_lab1', 2),
- ('lekarz1@szpital.pl', 'hash_lekarz1', 3);
+ ('admin@lab.pl', '$2a$10$zUGzFNJFxxUbwHs3VNXf5eRuw7WeolDpFmshe49lZGghM9QJvmQ1m', 1),
+ ('lekarz1@lab.pl', '$2a$10$zUGzFNJFxxUbwHs3VNXf5eRuw7WeolDpFmshe49lZGghM9QJvmQ1m', 2),
+ ('pacjent4@lab.pl', '$2a$10$zUGzFNJFxxUbwHs3VNXf5eRuw7WeolDpFmshe49lZGghM9QJvmQ1m', 3);
 
 
 INSERT INTO Uzytkownik (email, haslo_hash, id_rola) VALUES
- ('pacjent1@pacjent.pl', 'hash_p1', 3),
- ('pacjent2@pacjent.pl', 'hash_p2', 3),
- ('pacjent3@pacjent.pl', 'hash_p3', 3);
+ ('pacjent1@lab.pl', '$2a$10$zUGzFNJFxxUbwHs3VNXf5eRuw7WeolDpFmshe49lZGghM9QJvmQ1m', 3), --adminadmin
+ ('pacjent2@lab.pl', '$2a$10$zUGzFNJFxxUbwHs3VNXf5eRuw7WeolDpFmshe49lZGghM9QJvmQ1m', 3), --adminadmin
+ ('pacjent3@lab.pl', '$2a$10$zUGzFNJFxxUbwHs3VNXf5eRuw7WeolDpFmshe49lZGghM9QJvmQ1m', 3); --adminadmin
 
 
 INSERT INTO Pacjent (id_pacjenta, imie, nazwisko, pesel, telefon, data_urodzenia, id_plec, adres, numer_karty_pacjenta) VALUES
@@ -259,8 +259,8 @@ INSERT INTO Pacjent (id_pacjenta, imie, nazwisko, pesel, telefon, data_urodzenia
 
 
 INSERT INTO Uzytkownik (email, haslo_hash, id_rola) VALUES
- ('lekarz2@szpital.pl', 'hash_lekarz2', 3),
- ('lekarz3@szpital.pl', 'hash_lekarz3', 3);
+ ('lekarz2@lab.pl', '$2a$10$zUGzFNJFxxUbwHs3VNXf5eRuw7WeolDpFmshe49lZGghM9QJvmQ1m', 2),
+ ('lekarz3@lab.pl', '$2a$10$zUGzFNJFxxUbwHs3VNXf5eRuw7WeolDpFmshe49lZGghM9QJvmQ1m', 2);
 
 
 INSERT INTO Lekarz (id_lekarza, imie, nazwisko, pesel, telefon, data_urodzenia, id_plec, adres, specjalizacja, numer_prawa_wykonywania, oddzial) VALUES

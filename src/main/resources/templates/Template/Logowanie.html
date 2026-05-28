@@ -36,7 +36,13 @@
 
             <button type="submit" class="login-submit">Zaloguj się</button>
         </form>
+        <div th:if="${param.error}" class="error-message">
+            Nieprawidłowy email lub hasło.
+        </div>
 
+        <div th:if="${param.logout}" class="success-message">
+            Zostałeś wylogowany.
+        </div>
         <div class="back-home">
             <a th:href="@{/}"><i class="fas fa-arrow-left"></i> Nie masz jeszcze konta? - powrót do portalu</a>
         </div>
