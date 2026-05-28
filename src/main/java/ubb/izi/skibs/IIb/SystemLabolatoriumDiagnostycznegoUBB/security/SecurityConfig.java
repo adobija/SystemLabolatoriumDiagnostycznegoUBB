@@ -1,6 +1,7 @@
 package ubb.izi.skibs.IIb.SystemLabolatoriumDiagnostycznegoUBB.security;
 
 import jakarta.servlet.DispatcherType;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-
 public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
@@ -26,7 +26,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/login", "/register", "/css/**", "/js/**", "/images/**", "/assets/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/error", "/css/**", "/js/**", "/images/**", "/assets/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/lekarz/**").hasAnyRole("ADMIN", "LEKARZ")
                         .requestMatchers("/pacjent/**").hasAnyRole("ADMIN", "PACJENT")
@@ -37,7 +38,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/dashboard", true)
                         .failureUrl("/login?error")
                         .permitAll()
                 )
@@ -45,6 +46,14 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
+                )
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler((request, response, accessDeniedException) ->
+                                response.sendRedirect("/")
+                        )
+                        .authenticationEntryPoint((request, response, authException) ->
+                                response.sendRedirect("/login")
+                        )
                 )
                 .userDetailsService(customUserDetailsService);
 
