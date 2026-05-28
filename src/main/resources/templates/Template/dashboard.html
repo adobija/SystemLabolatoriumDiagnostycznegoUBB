@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 
     <meta charset="UTF-8">
@@ -30,21 +32,20 @@
 
             <span class="me-3">
                 <i class="fa-solid fa-user"></i>
-
-                <span th:text="${username}">
-                    Jan Kowalski
-                </span>
+                <span sec:authentication="name">Jan Kowalski</span>
             </span>
 
             <span class="badge bg-light text-dark me-3"
-                  th:text="${rola}">
-                PACJENT
+                  sec:authentication="principal.authorities">
+                [ROLE_PACJENT]
             </span>
 
-            <a href="/logout" class="btn btn-danger btn-sm">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Wyloguj
-            </a>
+            <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Wyloguj
+                </button>
+            </form>
 
         </div>
 
@@ -57,15 +58,8 @@
     <div class="card shadow-lg p-5">
 
         <h1 class="text-primary fw-bold">
-
             Witaj w systemie diagnostycznym
-
-            <span th:text="${username}">
-                Jan
-            </span>
-
-
-
+            <span sec:authentication="name"></span>
         </h1>
 
         <img
@@ -74,123 +68,51 @@
                 alt="Laboratorium">
     </div>
 
-    <!-- MENU -->
     <div class="row mt-5 justify-content-center">
 
-        <!-- PACJENT -->
-
-        <div class="col-md-6"
-             th:if="${rola == 'PACJENT'}">
-
+        <div class="col-md-6" sec:authorize="hasRole('PACJENT')">
             <div class="card p-4 shadow text-center">
-
                 <i class="fa-solid fa-file-waveform fa-3x text-primary mb-3"></i>
-
                 <h3>Historia badań</h3>
-
-                <p>
-                    Podgląd historii wykonanych badań.
-                </p>
-
-                <a href="/historia-badan"
-                   class="btn btn-primary">
-                    Przejdź
-                </a>
-
+                <p>Podgląd historii wykonanych badań.</p>
+                <a href="/historia-badan" class="btn btn-primary">Przejdź</a>
             </div>
-
         </div>
 
-        <div class="col-md-6"
-             th:if="${rola == 'PACJENT'}">
-
+        <div class="col-md-6" sec:authorize="hasRole('PACJENT')">
             <div class="card p-4 shadow text-center">
-
                 <i class="fa-solid fa-file-pdf fa-3x text-danger mb-3"></i>
-
                 <h3>Generuj PDF</h3>
-
-                <p>
-                    Pobierz wyniki badań jako PDF.
-                </p>
-
-                <a href="/pdf"
-                   class="btn btn-danger">
-                    Generuj
-                </a>
-
+                <p>Pobierz wyniki badań jako PDF.</p>
+                <a href="/pdf" class="btn btn-danger">Generuj</a>
             </div>
-
         </div>
 
-        <!-- LEKARZ -->
-
-        <div class="col-md-4"
-             th:if="${rola == 'LEKARZ'}">
-
+        <div class="col-md-4" sec:authorize="hasRole('LEKARZ')">
             <div class="card p-4 shadow text-center">
-
                 <i class="fa-solid fa-notes-medical fa-3x text-success mb-3"></i>
-
                 <h3>Dodaj badanie</h3>
-
-                <p>
-                    Dodaj nowe badanie dla pacjenta.
-                </p>
-
-                <a href="/dodaj-badanie"
-                   class="btn btn-success">
-                    Dodaj
-                </a>
-
+                <p>Dodaj nowe badanie dla pacjenta.</p>
+                <a href="/dodaj-badanie" class="btn btn-success">Dodaj</a>
             </div>
-
         </div>
 
-        <!-- ADMIN -->
-
-        <div class="col-md-4"
-             th:if="${rola == 'ADMIN'}">
-
+        <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
             <div class="card p-4 shadow text-center">
-
                 <i class="fa-solid fa-users fa-3x text-dark mb-3"></i>
-
                 <h3>Użytkownicy</h3>
-
-                <p>
-                    Zarządzanie użytkownikami systemu.
-                </p>
-
-                <a href="/admin/users"
-                   class="btn btn-dark">
-                    Zarządzaj
-                </a>
-
+                <p>Zarządzanie użytkownikami systemu.</p>
+                <a href="/admin/users" class="btn btn-dark">Zarządzaj</a>
             </div>
-
         </div>
 
-        <div class="col-md-4"
-             th:if="${rola == 'ADMIN'}">
-
+        <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
             <div class="card p-4 shadow text-center">
-
                 <i class="fa-solid fa-user-gear fa-3x text-warning mb-3"></i>
-
                 <h3>Role</h3>
-
-                <p>
-                    Modyfikacja ról użytkowników.
-                </p>
-
-                <a href="/admin/roles"
-                   class="btn btn-warning">
-                    Role
-                </a>
-
+                <p>Modyfikacja ról użytkowników.</p>
+                <a href="/admin/roles" class="btn btn-warning">Role</a>
             </div>
-
         </div>
 
     </div>
