@@ -1,6 +1,9 @@
 package ubb.izi.skibs.IIb.SystemLabolatoriumDiagnostycznegoUBB.controller;
 
 
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,13 +12,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class dashboardController {
 
     @GetMapping("/dashboard")
-    public String dashboard(Model model) {
+    public String dashboard(Authentication authentication, Model model) {
 
-        // TESTOWE DANE
-        // później podmienisz na dane z logowania
+        String username = authentication.getName();
 
-        model.addAttribute("username", "Jan Kowalski");
-        model.addAttribute("rola", "PACJENT");
+        String rola = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .map(authority -> authority.replace("ROLE_", ""))
+                .findFirst()
+                .orElse("BRAK_ROLI");
+
+        model.addAttribute("username", username);
+        model.addAttribute("rola", rola);
+
+
 
         return "Template/dashboard";
     }
