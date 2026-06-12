@@ -20,17 +20,18 @@
         <form th:action="@{/register}" method="post">
             <div class="input-row">
                 <div class="input-group">
-                    <label for="firstName">Imię</label>
+                    <label for="imie">Imię</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="firstName" name="firstName" placeholder="Jan" required>
+                        <input type="text" id="imie" name="imie" placeholder="Jan" required>
                     </div>
                 </div>
+
                 <div class="input-group">
-                    <label for="lastName">Nazwisko</label>
+                    <label for="nazwisko">Nazwisko</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="lastName" name="lastName" placeholder="Kowalski" required>
+                        <input type="text" id="nazwisko" name="nazwisko" placeholder="Kowalski" required>
                     </div>
                 </div>
             </div>
@@ -43,15 +44,34 @@
                         <input type="text" id="pesel" name="pesel" placeholder="00000000000" maxlength="11" required>
                     </div>
                 </div>
+
                 <div class="input-group">
-                    <label for="gender">Płeć</label>
+                    <label for="plec">Płeć</label>
                     <div class="input-wrapper select-wrapper">
                         <i class="fas fa-venus-mars"></i>
-                        <select id="gender" name="gender" required>
+                        <select id="plec" name="plec" required>
                             <option value="" disabled selected>Wybierz...</option>
                             <option value="M">Mężczyzna</option>
                             <option value="K">Kobieta</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="email">Adres e-mail</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" placeholder="twoj@email.pl" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="haslo">Hasło</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="haslo" name="haslo" placeholder="••••••••" required>
                     </div>
                 </div>
             </div>
