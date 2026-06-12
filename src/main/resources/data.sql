@@ -71,7 +71,7 @@ CREATE TABLE Pacjent (
     nazwisko VARCHAR(100) NOT NULL,
     pesel VARCHAR(11) NOT NULL UNIQUE,
     telefon VARCHAR(20),
-    data_urodzenia DATE NOT NULL,
+    data_urodzenia DATE,
     id_plec BIGINT NOT NULL,
     adres VARCHAR(255),
     numer_karty_pacjenta VARCHAR(50),

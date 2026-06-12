@@ -2,6 +2,7 @@ package ubb.izi.skibs.IIb.SystemLabolatoriumDiagnostycznegoUBB.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 @Table(name = "Uzytkownik")
@@ -31,6 +32,11 @@ public class Uzytkownik {
         this.email = email;
         this.hasloHash = hasloHash;
         this.rola = rola;
+    }
+
+    public Uzytkownik(String email, String hasloHash) {
+        this.email = email;
+        this.hasloHash = hasloHash;
     }
 
     public Long getId() {

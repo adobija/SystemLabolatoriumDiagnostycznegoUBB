@@ -20,17 +20,30 @@
         <form th:action="@{/register}" method="post">
             <div class="input-row">
                 <div class="input-group">
-                    <label for="firstName">Imię</label>
+                    <label for="imie">Imię</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="firstName" name="firstName" placeholder="Jan" required>
+                        <input type="text"
+                               id="imie"
+                               name="imie"
+                               placeholder="Jan"
+                               minlength="2"
+                               maxlength="50"
+                               required>
                     </div>
                 </div>
+
                 <div class="input-group">
-                    <label for="lastName">Nazwisko</label>
+                    <label for="nazwisko">Nazwisko</label>
                     <div class="input-wrapper">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="lastName" name="lastName" placeholder="Kowalski" required>
+                        <input type="text"
+                               id="nazwisko"
+                               name="nazwisko"
+                               placeholder="Kowalski"
+                               minlength="2"
+                               maxlength="50"
+                               required>
                     </div>
                 </div>
             </div>
@@ -40,18 +53,105 @@
                     <label for="pesel">PESEL</label>
                     <div class="input-wrapper">
                         <i class="fas fa-id-card"></i>
-                        <input type="text" id="pesel" name="pesel" placeholder="00000000000" maxlength="11" required>
+                        <input type="text"
+                               id="pesel"
+                               name="pesel"
+                               placeholder="00000000000"
+                               inputmode="numeric"
+                               pattern="[0-9]{11}"
+                               minlength="11"
+                               maxlength="11"
+                               title="PESEL musi zawierać dokładnie 11 cyfr"
+                               required>
                     </div>
                 </div>
+
                 <div class="input-group">
-                    <label for="gender">Płeć</label>
+                    <label for="plec">Płeć</label>
                     <div class="input-wrapper select-wrapper">
                         <i class="fas fa-venus-mars"></i>
-                        <select id="gender" name="gender" required>
+                        <select id="plec" name="plec" required>
                             <option value="" disabled selected>Wybierz...</option>
                             <option value="M">Mężczyzna</option>
-                            <option value="K">Kobieta</option>
+                            <option value="F">Kobieta</option>
+                            <option value="X">Inna / nie podano</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="telefon">Telefon</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel"
+                               id="telefon"
+                               name="telefon"
+                               placeholder="500600700"
+                               inputmode="numeric"
+                               pattern="[0-9]{9}"
+                               minlength="9"
+                               maxlength="9"
+                               title="Numer telefonu musi zawierać dokładnie 9 cyfr"
+                               required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="dataUrodzenia">Data urodzenia</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-calendar"></i>
+                        <input type="date"
+                               id="dataUrodzenia"
+                               name="dataUrodzenia"
+                               required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="adres">Adres</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text"
+                               id="adres"
+                               name="adres"
+                               placeholder="Warszawa, ul. Prosta 1"
+                               minlength="5"
+                               maxlength="255"
+                               required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Adres e-mail</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email"
+                               id="email"
+                               name="email"
+                               placeholder="twoj@email.pl"
+                               maxlength="255"
+                               required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="haslo">Hasło</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password"
+                               id="haslo"
+                               name="haslo"
+                               placeholder="••••••••"
+                               minlength="8"
+                               maxlength="100"
+                               title="Hasło musi mieć minimum 8 znaków"
+                               required>
                     </div>
                 </div>
             </div>
