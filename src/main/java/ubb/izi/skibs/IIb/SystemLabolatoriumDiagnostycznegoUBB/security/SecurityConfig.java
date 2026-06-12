@@ -42,13 +42,13 @@ public class SecurityConfig {
                         .failureUrl("/login?error")
                         .permitAll()
                 )
-                .headers(headers -> headers
-                        .frameOptions(frame -> frame.sameOrigin())
-                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
+                )
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin())
                 )
                 .exceptionHandling(ex -> ex
                         .accessDeniedHandler((request, response, accessDeniedException) ->
