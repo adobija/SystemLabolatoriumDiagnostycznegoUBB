@@ -3,7 +3,7 @@ package ubb.izi.skibs.IIb.SystemLabolatoriumDiagnostycznegoUBB.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "TypMaterialu")
+@Table(name = "Typ_Materialu")
 public class TypMaterialu {
 
     @Id
