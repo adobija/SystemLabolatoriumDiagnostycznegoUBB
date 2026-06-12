@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wprowadzanie wyników badań</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/common.css}"
+          href="/css/common.css">
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}"
+          href="/css/dashboard.css">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #003264 0%, #005088 100%);
+            min-height: 100vh;
+            color: var(--text-dark, #1a1a1a);
+        }
+
+        .results-page {
+            padding-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        .page-header {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            padding: 28px 32px;
+            margin-bottom: 26px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.20);
+        }
+
+        .page-header h1 {
+            color: var(--primary-color, #002d4d);
+            margin-bottom: 5px;
+        }
+
+        .page-header-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-color, #0d9b7a);
+            color: white;
+            border-radius: 16px;
+            font-size: 30px;
+            flex-shrink: 0;
+        }
+
+        .form-section {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+        }
+
+        .form-section:hover {
+            transform: none;
+        }
+
+        .section-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #dce4e7;
+            background: #f8fafb;
+        }
+
+        .section-body {
+            padding: 25px;
+        }
+
+        .section-icon {
+            width: 46px;
+            height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(13, 155, 122, 0.13);
+            color: var(--accent-color, #0d9b7a);
+            border-radius: 12px;
+            margin-right: 14px;
+        }
+
+        .section-header h2 {
+            font-size: 1.35rem;
+            margin: 0;
+        }
+
+        .hidden-section {
+            display: none;
+        }
+
+        .patient-details {
+            margin-top: 22px;
+            padding: 22px;
+            border: 1px solid #d7e0e4;
+            border-radius: 14px;
+            background: #f8fafb;
+        }
+
+        .detail-label {
+            color: #66747c;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .detail-value {
+            color: var(--primary-color, #002d4d);
+            font-weight: 700;
+            margin-bottom: 17px;
+            word-break: break-word;
+        }
+
+        .test-box {
+            position: relative;
+            height: 100%;
+            border: 2px solid #dce4e7;
+            border-radius: 14px;
+            padding: 18px;
+            background: #f8fafb;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .test-box:hover {
+            border-color: var(--accent-color, #0d9b7a);
+            background: #f1faf7;
+        }
+
+        .test-box.selected {
+            border-color: var(--accent-color, #0d9b7a);
+            background: #eaf8f4;
+            box-shadow: 0 5px 15px rgba(13, 155, 122, 0.18);
+        }
+
+        .test-box .form-check-input {
+            width: 21px;
+            height: 21px;
+            margin-top: 3px;
+        }
+
+        .test-code {
+            display: inline-block;
+            background: var(--primary-color, #002d4d);
+            color: white;
+            font-size: 0.76rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .result-card {
+            border: 1px solid #d8e1e5;
+            border-left: 6px solid var(--accent-color, #0d9b7a);
+            border-radius: 15px;
+            padding: 24px;
+            margin-bottom: 20px;
+            background: white;
+            box-shadow: 0 7px 18px rgba(0, 45, 77, 0.08);
+        }
+
+        .medical-note {
+            background: #f1f7f6;
+            border-radius: 10px;
+            padding: 15px 17px;
+            margin: 17px 0;
+            color: #35474d;
+            border: 1px solid #d7e8e3;
+        }
+
+        .range-status {
+            margin-top: 15px;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 9px;
+            border: 1px solid #b9c6cc;
+            min-height: 48px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--accent-color, #0d9b7a);
+            box-shadow: 0 0 0 0.2rem rgba(13, 155, 122, 0.16);
+        }
+
+        textarea.form-control {
+            min-height: auto;
+        }
+
+        .save-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+            position: sticky;
+            bottom: 20px;
+            z-index: 10;
+        }
+
+        .btn-save {
+            background: var(--accent-color, #0d9b7a);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-weight: 700;
+            padding: 13px 28px;
+        }
+
+        .btn-save:hover {
+            background: var(--primary-color, #002d4d);
+            color: white;
+        }
+
+        .empty-tests {
+            color: #66747c;
+            background: #f8fafb;
+            border: 1px dashed #aebcc2;
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 22px;
+            }
+
+            .section-body {
+                padding: 18px;
+            }
+
+            .save-panel {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container results-page">
+
+    <header class="page-header">
+        <div class="d-flex align-items-center gap-3">
+
+            <div class="page-header-icon">
+                <i class="fa-solid fa-flask-vial"></i>
+            </div>
+
+            <div>
+                <h1 class="h2">Wprowadzanie wyników badań</h1>
+
+                <p class="mb-0 text-secondary">
+                    Wybierz pacjenta, zaznacz wykonane badania i wprowadź
+                    uzyskane wartości.
+                </p>
+            </div>
+
+        </div>
+    </header>
+
+    <div th:if="${param.sukces}"
+         class="alert alert-success shadow-sm">
+        Wyniki badań zostały zapisane.
+    </div>
+
+    <div th:if="${blad}"
+         class="alert alert-danger shadow-sm"
+         th:text="${blad}">
+        Wystąpił błąd podczas zapisywania danych.
+    </div>
+
+    <form th:action="@{/dodaj-badanie}"
+          action="/dodaj-badanie"
+          method="post"
+          id="resultsForm">
+
+        <!-- 1. PACJENT -->
+        <section class="form-section">
+
+            <div class="section-header">
+                <div class="d-flex align-items-center">
+
+                    <span class="section-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+
+                    <div>
+                        <h2>1. Dane pacjenta</h2>
+
+                        <small class="text-secondary">
+                            Wyszukaj pacjenta po nazwisku, numerze PESEL
+                            lub numerze karty.
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="section-body">
+
+                <div class="row g-3">
+
+                    <div class="col-lg-6">
+                        <label for="patientSearch" class="form-label fw-semibold">
+                            Wyszukiwanie
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+
+                            <input type="text"
+                                   id="patientSearch"
+                                   class="form-control"
+                                   placeholder="Nazwisko, PESEL lub numer karty">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label for="pacjentSelect" class="form-label fw-semibold">
+                            Pacjent
+                        </label>
+
+                        <select id="pacjentSelect"
+                                name="pacjentId"
+                                class="form-select"
+                                required>
+
+                            <option value="">-- wybierz pacjenta --</option>
+
+                            <option th:each="pacjent : ${pacjenci}"
+                                    th:value="${pacjent.id}"
+                                    th:text="${pacjent.imie + ' ' +
+                                               pacjent.nazwisko +
+                                               ' — PESEL: ' +
+                                               pacjent.pesel}"
+                                    th:attr="
+                                        data-imie=${pacjent.imie},
+                                        data-nazwisko=${pacjent.nazwisko},
+                                        data-pesel=${pacjent.pesel},
+                                        data-data-urodzenia=${pacjent.dataUrodzenia},
+                                        data-telefon=${pacjent.telefon},
+                                        data-adres=${pacjent.adres},
+                                        data-karta=${pacjent.numerKartyPacjenta},
+                                        data-plec=${pacjent.plec != null
+                                            ? pacjent.plec.opis
+                                            : 'Brak danych'}">
+                            </option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div id="patientDetails"
+                     class="patient-details hidden-section">
+
+                    <h3 class="h5 mb-4">
+                        <i class="fa-solid fa-address-card me-2"></i>
+                        Pełne dane wybranego pacjenta
+                    </h3>
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="detail-label">Imię</div>
+                            <div id="detailImie" class="detail-value">—</div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="detail-label">Nazwisko</div>
+                            <div id="detailNazwisko" class="detail-value">—</div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="detail-label">PESEL</div>
+                            <div id="detailPesel" class="detail-value">—</div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="detail-label">Data urodzenia</div>
+                            <div id="detailDataUrodzenia" class="detail-value">—</div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="detail-label">Płeć</div>
+                            <div id="detailPlec" class="detail-value">—</div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="detail-label">Telefon</div>
+                            <div id="detailTelefon" class="detail-value">—</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="detail-label">Numer karty pacjenta</div>
+                            <div id="detailKarta" class="detail-value">—</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="detail-label">Adres</div>
+                            <div id="detailAdres" class="detail-value">—</div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. ZLECENIE -->
+        <section id="orderSection"
+                 class="form-section hidden-section">
+
+            <div class="section-header">
+                <div class="d-flex align-items-center">
+
+                    <span class="section-icon">
+                        <i class="fa-solid fa-file-medical"></i>
+                    </span>
+
+                    <div>
+                        <h2>2. Informacje o zleceniu</h2>
+
+                        <small class="text-secondary">
+                            Informacje wspólne dla zapisywanych wyników.
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="section-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label for="dataZlecenia" class="form-label fw-semibold">
+                            Data i czas
+                        </label>
+
+                        <input type="datetime-local"
+                               id="dataZlecenia"
+                               name="dataZlecenia"
+                               class="form-control"
+                               required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Status
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               value="W trakcie realizacji"
+                               readonly>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="trybRealizacji"
+                               class="form-label fw-semibold">
+                            Tryb realizacji
+                        </label>
+
+                        <select id="trybRealizacji"
+                                name="trybRealizacji"
+                                class="form-select">
+
+                            <option value="STANDARDOWY">Standardowy</option>
+                            <option value="PILNY">Pilny</option>
+                            <option value="CITO">CITO</option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="uwagiKliniczne"
+                               class="form-label fw-semibold">
+                            Informacje kliniczne i uwagi
+                        </label>
+
+                        <textarea id="uwagiKliniczne"
+                                  name="uwagiKliniczne"
+                                  class="form-control"
+                                  rows="6">Materiał został przyjęty zgodnie z obowiązującą procedurą.
+Stan materiału w chwili przyjęcia:
+Istotne informacje kliniczne:
+Przyjmowane leki:
+Uwagi dotyczące zlecenia:</textarea>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. WYBÓR BADAŃ -->
+        <section id="testsSection"
+                 class="form-section hidden-section">
+
+            <div class="section-header">
+                <div class="d-flex align-items-center">
+
+                    <span class="section-icon">
+                        <i class="fa-solid fa-list-check"></i>
+                    </span>
+
+                    <div>
+                        <h2>3. Wybór badań</h2>
+
+                        <small class="text-secondary">
+                            Zaznacz rodzaje badań wykonanych dla pacjenta.
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="section-body">
+
+                <div th:if="${#lists.isEmpty(badania)}"
+                     class="empty-tests">
+                    W bazie nie znaleziono żadnych rodzajów badań.
+                </div>
+
+                <div id="testsCheckboxContainer"
+                     class="row g-3">
+
+                    <div th:each="badanie : ${badania}"
+                         class="col-md-6 col-xl-4">
+
+                        <label class="test-box"
+                               th:for="${'badanie-' + badanie.id}">
+
+                            <div class="d-flex align-items-start gap-3">
+
+                                <input type="checkbox"
+                                       class="form-check-input test-checkbox"
+                                       name="badanieIds"
+                                       th:id="${'badanie-' + badanie.id}"
+                                       th:value="${badanie.id}"
+                                       th:attr="
+                                           data-id=${badanie.id},
+                                           data-kod=${badanie.kodBadania},
+                                           data-nazwa=${badanie.nazwa},
+                                           data-opis=${badanie.opis},
+                                           data-jednostka=${badanie.jednostka},
+                                           data-min=${badanie.wartoscMin},
+                                           data-max=${badanie.wartoscMax}">
+
+                                <div>
+                                    <span class="test-code"
+                                          th:text="${badanie.kodBadania}">
+                                        KOD
+                                    </span>
+
+                                    <div class="fw-bold"
+                                         th:text="${badanie.nazwa}">
+                                        Nazwa badania
+                                    </div>
+
+                                    <small class="text-secondary"
+                                           th:text="${badanie.jednostka != null
+                                               ? 'Jednostka: ' + badanie.jednostka
+                                               : 'Brak jednostki'}">
+                                        Jednostka
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. WYNIKI -->
+        <section id="resultsSection"
+                 class="form-section hidden-section">
+
+            <div class="section-header">
+                <div class="d-flex align-items-center">
+
+                    <span class="section-icon">
+                        <i class="fa-solid fa-vials"></i>
+                    </span>
+
+                    <div>
+                        <h2>4. Badania i wyniki</h2>
+
+                        <small class="text-secondary">
+                            Wprowadź wynik każdego zaznaczonego badania.
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="section-body">
+                <div id="resultsContainer"></div>
+            </div>
+        </section>
+
+        <!-- 5. KOMENTARZ -->
+        <section id="commentSection"
+                 class="form-section hidden-section">
+
+            <div class="section-header">
+                <div class="d-flex align-items-center">
+
+                    <span class="section-icon">
+                        <i class="fa-solid fa-comment-medical"></i>
+                    </span>
+
+                    <div>
+                        <h2>5. Komentarz diagnosty</h2>
+
+                        <small class="text-secondary">
+                            Końcowa informacja dotycząca całego zestawu wyników.
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="section-body">
+
+                <textarea name="komentarzDiagnosty"
+                          class="form-control"
+                          rows="7">Materiał został oceniony jako odpowiedni do wykonania oznaczeń.
+Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.
+Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.
+Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.
+Uwagi dodatkowe:</textarea>
+
+            </div>
+        </section>
+
+        <div id="savePanel"
+             class="save-panel hidden-section">
+
+            <div class="d-flex flex-column flex-md-row
+                        justify-content-between align-items-md-center gap-3">
+
+                <div>
+                    <strong>Sprawdź poprawność danych przed zapisem.</strong>
+
+                    <div class="text-secondary small">
+                        Wszystkie zaznaczone badania powinny posiadać wynik.
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <a th:href="@{/dashboard}"
+                       href="/dashboard"
+                       class="btn btn-outline-secondary px-4">
+
+                        <i class="fa-solid fa-arrow-left me-2"></i>
+                        Powrót
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-save">
+
+                        <i class="fa-solid fa-floppy-disk me-2"></i>
+                        Zapisz wyniki
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+    const patientSelect = document.getElementById("pacjentSelect");
+    const patientSearch = document.getElementById("patientSearch");
+
+    const patientDetails = document.getElementById("patientDetails");
+    const orderSection = document.getElementById("orderSection");
+    const testsSection = document.getElementById("testsSection");
+    const resultsSection = document.getElementById("resultsSection");
+    const commentSection = document.getElementById("commentSection");
+    const savePanel = document.getElementById("savePanel");
+
+    const resultsContainer = document.getElementById("resultsContainer");
+    const testsCheckboxContainer =
+        document.getElementById("testsCheckboxContainer");
+
+    const originalPatientOptions =
+        Array.from(patientSelect.options)
+            .slice(1)
+            .map(option => option.cloneNode(true));
+
+    patientSearch.addEventListener("input", function () {
+        const filter = this.value.trim().toLowerCase();
+
+        patientSelect.innerHTML =
+            '<option value="">-- wybierz pacjenta --</option>';
+
+        originalPatientOptions.forEach(function (option) {
+            const searchableText = [
+                option.textContent,
+                option.dataset.imie,
+                option.dataset.nazwisko,
+                option.dataset.pesel,
+                option.dataset.karta
+            ].join(" ").toLowerCase();
+
+            if (searchableText.includes(filter)) {
+                patientSelect.appendChild(option.cloneNode(true));
+            }
+        });
+
+        resetPatientSections();
+    });
+
+    patientSelect.addEventListener("change", function () {
+        const selected = this.options[this.selectedIndex];
+
+        if (!selected || !selected.value) {
+            resetPatientSections();
+            return;
+        }
+
+        setText("detailImie", selected.dataset.imie);
+        setText("detailNazwisko", selected.dataset.nazwisko);
+        setText("detailPesel", selected.dataset.pesel);
+        setText("detailDataUrodzenia", selected.dataset.dataUrodzenia);
+        setText("detailPlec", selected.dataset.plec);
+        setText("detailTelefon", selected.dataset.telefon);
+        setText("detailKarta", selected.dataset.karta);
+        setText("detailAdres", selected.dataset.adres);
+
+        patientDetails.classList.remove("hidden-section");
+        orderSection.classList.remove("hidden-section");
+        testsSection.classList.remove("hidden-section");
+    });
+
+    function setText(elementId, value) {
+        document.getElementById(elementId).textContent =
+            value && value !== "null" ? value : "Brak danych";
+    }
+
+    function resetPatientSections() {
+        patientDetails.classList.add("hidden-section");
+        orderSection.classList.add("hidden-section");
+        testsSection.classList.add("hidden-section");
+        resultsSection.classList.add("hidden-section");
+        commentSection.classList.add("hidden-section");
+        savePanel.classList.add("hidden-section");
+
+        document.querySelectorAll(".test-checkbox")
+            .forEach(function (checkbox) {
+                checkbox.checked = false;
+                checkbox.closest(".test-box")
+                    ?.classList.remove("selected");
+            });
+
+        resultsContainer.innerHTML = "";
+    }
+
+    testsCheckboxContainer.addEventListener("change", function (event) {
+        const checkbox = event.target;
+
+        if (!checkbox.classList.contains("test-checkbox")) {
+            return;
+        }
+
+        const testBox = checkbox.closest(".test-box");
+
+        if (checkbox.checked) {
+            testBox.classList.add("selected");
+            addResultCard(checkbox);
+        } else {
+            testBox.classList.remove("selected");
+            removeResultCard(checkbox.dataset.id);
+        }
+
+        updateResultsVisibility();
+    });
+
+    function addResultCard(checkbox) {
+        const testId = checkbox.dataset.id;
+
+        if (document.getElementById(`result-${testId}`)) {
+            return;
+        }
+
+        const name = checkbox.dataset.nazwa || "Badanie";
+        const code = checkbox.dataset.kod || "";
+        const description =
+            checkbox.dataset.opis &&
+            checkbox.dataset.opis !== "null"
+                ? checkbox.dataset.opis
+                : "Brak dodatkowego opisu badania.";
+
+        const unit =
+            checkbox.dataset.jednostka &&
+            checkbox.dataset.jednostka !== "null"
+                ? checkbox.dataset.jednostka
+                : "";
+
+        const min = parseNumber(checkbox.dataset.min);
+        const max = parseNumber(checkbox.dataset.max);
+
+        const rangeText = createRangeText(min, max);
+
+        const card = document.createElement("div");
+
+        card.id = `result-${testId}`;
+        card.className = "result-card";
+
+        card.innerHTML = `
+            <div class="d-flex justify-content-between
+                        align-items-start gap-3">
+
+                <div>
+                    <span class="test-code">${escapeHtml(code)}</span>
+                    <h3 class="h5 mb-1">${escapeHtml(name)}</h3>
+                </div>
+
+                <span class="badge text-bg-secondary">
+                    ${escapeHtml(unit || "bez jednostki")}
+                </span>
+            </div>
+
+            <div class="medical-note">
+                <strong>Informacja diagnostyczna:</strong><br>
+                ${escapeHtml(description)}
+                Wynik należy ocenić w odniesieniu do zakresu
+                referencyjnego i stanu klinicznego pacjenta.
+            </div>
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">
+                        Wynik liczbowy
+                    </label>
+
+                    <input type="number"
+                           step="0.01"
+                           class="form-control result-value"
+                           name="wynik_${testId}"
+                           data-test-id="${testId}"
+                           data-min="${min ?? ""}"
+                           data-max="${max ?? ""}"
+                           placeholder="Wpisz wartość"
+                           required>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">
+                        Jednostka
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           name="jednostka_${testId}"
+                           value="${escapeHtml(unit)}"
+                           readonly>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">
+                        Zakres referencyjny
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           value="${escapeHtml(rangeText)}"
+                           readonly>
+                </div>
+
+                <div class="col-12">
+                    <div id="status-${testId}"
+                         class="range-status hidden-section">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">
+                        Komentarz do wyniku
+                    </label>
+
+                    <textarea class="form-control"
+                              name="komentarz_${testId}"
+                              rows="4">Materiał oceniono jako odpowiedni do wykonania oznaczenia.
+Pomiar wykonano zgodnie z obowiązującą procedurą.
+Uwagi do wyniku:</textarea>
+                </div>
+
+            </div>
+        `;
+
+        resultsContainer.appendChild(card);
+
+        card.querySelector(".result-value")
+            .addEventListener("input", function () {
+                checkReferenceRange(this);
+            });
+    }
+
+    function removeResultCard(testId) {
+        document.getElementById(`result-${testId}`)?.remove();
+    }
+
+    function updateResultsVisibility() {
+        const checkedCount =
+            document.querySelectorAll(".test-checkbox:checked").length;
+
+        const hasResults = checkedCount > 0;
+
+        resultsSection.classList.toggle("hidden-section", !hasResults);
+        commentSection.classList.toggle("hidden-section", !hasResults);
+        savePanel.classList.toggle("hidden-section", !hasResults);
+    }
+
+    function checkReferenceRange(input) {
+        const testId = input.dataset.testId;
+        const status = document.getElementById(`status-${testId}`);
+
+        if (input.value === "") {
+            status.className = "range-status hidden-section";
+            status.innerHTML = "";
+            return;
+        }
+
+        const value = Number(input.value);
+        const min = parseNumber(input.dataset.min);
+        const max = parseNumber(input.dataset.max);
+
+        if (min === null && max === null) {
+            status.className = "alert alert-secondary range-status";
+            status.innerHTML = `
+                <strong>Brak zakresu referencyjnego.</strong>
+                Wynik wymaga ręcznej oceny diagnosty.
+            `;
+            return;
+        }
+
+        if (min !== null && value < min) {
+            status.className = "alert alert-warning range-status";
+            status.innerHTML = `
+                <strong>Wynik poniżej zakresu referencyjnego.</strong><br>
+                Zaleca się weryfikację oznaczenia oraz interpretację
+                w kontekście stanu klinicznego pacjenta.
+            `;
+            return;
+        }
+
+        if (max !== null && value > max) {
+            status.className = "alert alert-danger range-status";
+            status.innerHTML = `
+                <strong>Wynik powyżej zakresu referencyjnego.</strong><br>
+                Wynik może wymagać ponownej weryfikacji oraz zgłoszenia
+                lekarzowi prowadzącemu.
+            `;
+            return;
+        }
+
+        status.className = "alert alert-success range-status";
+        status.innerHTML = `
+            <strong>Wynik mieści się w zakresie referencyjnym.</strong><br>
+            Nie wykryto automatycznie odchylenia od podanych wartości.
+        `;
+    }
+
+    function parseNumber(value) {
+        if (value === undefined ||
+            value === null ||
+            value === "" ||
+            value === "null") {
+            return null;
+        }
+
+        const parsed = Number(String(value).replace(",", "."));
+
+        return Number.isFinite(parsed) ? parsed : null;
+    }
+
+    function createRangeText(min, max) {
+        if (min !== null && max !== null) {
+            return `${min} – ${max}`;
+        }
+
+        if (min !== null) {
+            return `od ${min}`;
+        }
+
+        if (max !== null) {
+            return `do ${max}`;
+        }
+
+        return "Brak zakresu";
+    }
+
+    function escapeHtml(value) {
+        const div = document.createElement("div");
+        div.textContent = value ?? "";
+        return div.innerHTML;
+    }
+
+    function setCurrentDateTime() {
+        const input = document.getElementById("dataZlecenia");
+        const now = new Date();
+
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        input.value = now.toISOString().slice(0, 16);
+    }
+
+    const resultsForm = document.getElementById("resultsForm");
+
+    resultsForm.addEventListener("submit", function (event) {
+        const selectedPatient = patientSelect.value;
+        const checkedTests =
+            document.querySelectorAll(".test-checkbox:checked");
+
+        if (!selectedPatient) {
+            event.preventDefault();
+            alert("Wybierz pacjenta.");
+            patientSelect.focus();
+            return;
+        }
+
+        if (checkedTests.length === 0) {
+            event.preventDefault();
+            alert("Zaznacz przynajmniej jedno badanie.");
+            return;
+        }
+
+        for (const checkbox of checkedTests) {
+            const testId = checkbox.dataset.id;
+            const resultInput =
+                document.querySelector(`[name="wynik_${testId}"]`);
+
+            if (!resultInput || resultInput.value.trim() === "") {
+                event.preventDefault();
+                alert("Uzupełnij wynik dla każdego zaznaczonego badania.");
+
+                if (resultInput) {
+                    resultInput.focus();
+                }
+
+                return;
+            }
+        }
+    });
+
+    setCurrentDateTime();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
