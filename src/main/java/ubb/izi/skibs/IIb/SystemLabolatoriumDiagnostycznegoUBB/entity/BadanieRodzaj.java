@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "BadanieRodzaj")
+@Table(name = "Badanie_Rodzaj")
 public class BadanieRodzaj {
 
     @Id
@@ -38,5 +38,39 @@ public class BadanieRodzaj {
     private TypMaterialu typMaterialu;
 
     public BadanieRodzaj() {}
+    public Long getId() {
+        return id;
+    }
 
+    public String getKodBadania() {
+        return kodBadania;
+    }
+
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public String getOpis() {
+        return opis;
+    }
+
+    public String getJednostka() {
+        return jednostka;
+    }
+
+    public BigDecimal getWartoscMin() {
+        return wartoscMin;
+    }
+
+    public BigDecimal getWartoscMax() {
+        return wartoscMax;
+    }
+
+    public BigDecimal getCena() {
+        return cena;
+    }
+
+    public TypMaterialu getTypMaterialu() {
+        return typMaterialu;
+    }
 }

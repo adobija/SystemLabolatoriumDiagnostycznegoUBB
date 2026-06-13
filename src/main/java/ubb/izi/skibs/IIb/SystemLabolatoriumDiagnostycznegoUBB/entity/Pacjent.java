@@ -41,17 +41,16 @@ public class Pacjent {
     @Column(name = "numer_karty_pacjenta", length = 50)
     private String numerKartyPacjenta;
 
-    public Pacjent() {}
+    public Pacjent() {
+    }
 
     // gettery/settery
-
     public Pacjent(String imie, String nazwisko, String pesel, Plec plec) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.pesel = pesel;
         this.plec = plec;
     }
-
     public Long getId() {
         return id;
     }

@@ -48,6 +48,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .headers(headers -> headers
+
                         .frameOptions(frame -> frame.sameOrigin())
                 )
                 .exceptionHandling(ex -> ex
