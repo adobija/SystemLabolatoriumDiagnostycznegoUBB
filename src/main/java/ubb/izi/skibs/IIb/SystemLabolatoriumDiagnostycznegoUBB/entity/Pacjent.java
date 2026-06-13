@@ -28,7 +28,7 @@ public class Pacjent {
     @Column(length = 20)
     private String telefon;
 
-    @Column(name = "data_urodzenia", nullable = false)
+    @Column(name = "data_urodzenia")
     private LocalDate dataUrodzenia;
 
     @ManyToOne
@@ -44,6 +44,13 @@ public class Pacjent {
     public Pacjent() {
     }
 
+    // gettery/settery
+    public Pacjent(String imie, String nazwisko, String pesel, Plec plec) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.pesel = pesel;
+        this.plec = plec;
+    }
     public Long getId() {
         return id;
     }

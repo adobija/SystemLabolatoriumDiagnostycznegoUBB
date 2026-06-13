@@ -70,7 +70,7 @@
 
     <div class="row mt-5 justify-content-center">
 
-        <div class="col-md-6" sec:authorize="hasRole('PACJENT')">
+        <div class="col-md-4" sec:authorize="hasRole('PACJENT')">
             <div class="card p-4 shadow text-center">
                 <i class="fa-solid fa-file-waveform fa-3x text-primary mb-3"></i>
                 <h3>Historia badań</h3>
@@ -79,14 +79,6 @@
             </div>
         </div>
 
-        <div class="col-md-6" sec:authorize="hasRole('PACJENT')">
-            <div class="card p-4 shadow text-center">
-                <i class="fa-solid fa-file-pdf fa-3x text-danger mb-3"></i>
-                <h3>Generuj PDF</h3>
-                <p>Pobierz wyniki badań jako PDF.</p>
-                <a href="/pdf" class="btn btn-danger">Generuj</a>
-            </div>
-        </div>
 
         <div class="col-md-4" sec:authorize="hasRole('LEKARZ')">
             <div class="card p-4 shadow text-center">
@@ -97,21 +89,14 @@
             </div>
         </div>
 
-        <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
-            <div class="card p-4 shadow text-center">
-                <i class="fa-solid fa-users fa-3x text-dark mb-3"></i>
-                <h3>Użytkownicy</h3>
-                <p>Zarządzanie użytkownikami systemu.</p>
-                <a href="/admin/users" class="btn btn-dark">Zarządzaj</a>
-            </div>
-        </div>
+                <!-- Panel modyfikacji użytkownikow   -->
 
         <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
-            <div class="card p-4 shadow text-center">
-                <i class="fa-solid fa-user-gear fa-3x text-warning mb-3"></i>
-                <h3>Role</h3>
-                <p>Modyfikacja ról użytkowników.</p>
-                <a href="/admin/roles" class="btn btn-warning">Role</a>
+            <div class="card p-4 shadow text-center d-flex flex-column">
+                <i class="fa-solid fa-users-gear fa-3x text-dark mb-3"></i>
+                <h3>Zarządzanie użytkownikami</h3>
+                <p>Przeglądaj, edytuj role i usuwaj użytkowników systemu.</p>
+                <a href="/admin/users" class="btn btn-dark mt-auto">Zarządzaj</a>
             </div>
         </div>
 

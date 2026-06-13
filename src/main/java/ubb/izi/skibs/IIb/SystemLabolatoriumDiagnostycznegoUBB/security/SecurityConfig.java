@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/", "/login", "/register", "/error", "/css/**", "/js/**", "/images/**", "/assets/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/h2-console/**", "/", "/login", "/register/**", "/error", "/css/**", "/js/**", "/images/**", "/assets/**", "/favicon.ico", "/static/**", "/video/**").permitAll()
                         .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/lekarz/**").hasAnyRole("ADMIN", "LEKARZ")
@@ -48,7 +48,9 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .headers(headers -> headers
-                        .frameOptions(frame -> frame.sameOrigin()))
+
+                        .frameOptions(frame -> frame.sameOrigin())
+                )
                 .exceptionHandling(ex -> ex
                         .accessDeniedHandler((request, response, accessDeniedException) ->
                                 response.sendRedirect("/")
