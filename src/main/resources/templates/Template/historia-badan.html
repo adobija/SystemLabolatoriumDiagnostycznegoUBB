@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Historia badań</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/common.css}"
+        href="/css/common.css">
+
+  <link rel="stylesheet"
+        th:href="@{/css/dashboard.css}"
+        href="/css/dashboard.css">
+
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #003264 0%, #005088 100%);
+        color: var(--text-dark, #1a1a1a);
+    }
+
+    .history-page {
+        padding-top: 38px;
+        padding-bottom: 60px;
+    }
+
+    .history-header,
+    .history-panel {
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+    }
+
+    .history-header {
+        padding: 28px 30px;
+        margin-bottom: 24px;
+    }
+
+    .history-icon {
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        border-radius: 16px;
+        background: var(--accent-color, #0d9b7a);
+        color: white;
+        font-size: 29px;
+    }
+
+    .history-header h1 {
+        margin-bottom: 4px;
+        color: var(--primary-color, #002d4d);
+    }
+
+    .history-panel {
+        padding: 25px;
+    }
+
+    .summary-card {
+        height: 100%;
+        padding: 20px;
+
+        background: white;
+        border: 1px solid #dce5e8;
+        border-radius: 16px;
+        box-shadow: 0 7px 18px rgba(0, 45, 77, 0.08);
+    }
+
+    .summary-label {
+        color: #67767d;
+        font-size: 0.9rem;
+    }
+
+    .summary-value {
+        color: var(--primary-color, #002d4d);
+        font-size: 1.7rem;
+        font-weight: 800;
+    }
+
+    .filter-panel {
+        margin-bottom: 24px;
+        padding: 20px;
+
+        background: #f8fafb;
+        border: 1px solid #dce5e8;
+        border-radius: 15px;
+    }
+
+    .form-control,
+    .form-select {
+        min-height: 46px;
+        border: 1px solid #b9c6cc;
+        border-radius: 10px;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--accent-color, #0d9b7a);
+        box-shadow: 0 0 0 0.2rem rgba(13, 155, 122, 0.15);
+    }
+
+    .result-card {
+        margin-bottom: 16px;
+        padding: 20px;
+
+        background: white;
+        border: 1px solid #dce5e8;
+        border-radius: 16px;
+        box-shadow: 0 6px 16px rgba(0, 45, 77, 0.07);
+
+        transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease;
+    }
+
+    .result-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(0, 45, 77, 0.12);
+    }
+
+    .result-card.normal {
+        border-left: 6px solid var(--accent-color, #0d9b7a);
+    }
+
+    .result-card.abnormal {
+        border-left: 6px solid #c0392b;
+    }
+
+    .patient-name {
+        color: var(--primary-color, #002d4d);
+        font-size: 1.08rem;
+        font-weight: 800;
+    }
+
+    .test-name {
+        color: #24363d;
+        font-weight: 700;
+    }
+
+    .result-value {
+        color: var(--primary-color, #002d4d);
+        font-size: 1.25rem;
+        font-weight: 800;
+    }
+
+    .meta-label {
+        color: #748087;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        padding: 7px 12px;
+        border-radius: 999px;
+
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+
+    .status-normal {
+        background: #e8f7f2;
+        color: #087257;
+    }
+
+    .status-abnormal {
+        background: #fdeceb;
+        color: #a1261d;
+    }
+
+    .btn-details {
+        padding: 10px 17px;
+
+        background: var(--accent-color, #0d9b7a);
+        color: white;
+        border: none;
+        border-radius: 9px;
+
+        font-weight: 700;
+    }
+
+    .btn-details:hover {
+        background: var(--primary-color, #002d4d);
+        color: white;
+    }
+
+    .empty-state {
+        padding: 45px 20px;
+
+        background: #f8fafb;
+        border: 1px dashed #aebcc2;
+        border-radius: 16px;
+
+        color: #66747c;
+        text-align: center;
+    }
+
+    .empty-state i {
+        margin-bottom: 15px;
+        color: var(--accent-color, #0d9b7a);
+        font-size: 2.8rem;
+    }
+
+    .results-count {
+        color: #66747c;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .history-header,
+        .history-panel {
+            padding: 20px;
+        }
+
+        .result-card {
+            padding: 17px;
+        }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container history-page">
+
+  <header class="history-header">
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-4">
+
+      <div class="d-flex align-items-center gap-3">
+
+        <div class="history-icon">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </div>
+
+        <div>
+          <h1 class="h2">Historia badań</h1>
+
+          <p class="mb-0 text-secondary">
+            Przeglądaj zapisane wyniki badań pacjentów.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="d-flex align-items-center">
+        <a th:href="@{/dashboard}"
+           href="/dashboard"
+           class="btn btn-outline-secondary px-4">
+
+          <i class="fa-solid fa-arrow-left me-2"></i>
+          Powrót do panelu
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <section class="history-panel">
+
+    <div class="row g-3 mb-4">
+
+      <div class="col-md-4">
+        <div class="summary-card">
+          <div class="summary-label">Wszystkie wyniki</div>
+
+          <div class="summary-value"
+               th:text="${liczbaWynikow}">
+            0
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="summary-card">
+          <div class="summary-label">Wyniki prawidłowe</div>
+
+          <div class="summary-value"
+               id="normalCount">
+            0
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="summary-card">
+          <div class="summary-label">Wyniki nieprawidłowe</div>
+
+          <div class="summary-value"
+               id="abnormalCount">
+            0
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="filter-panel">
+
+      <div class="row g-3">
+
+        <div class="col-lg-6">
+          <label for="historySearch"
+                 class="form-label fw-semibold">
+            Wyszukaj pacjenta lub badanie
+          </label>
+
+          <div class="input-group">
+
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+
+            <input type="text"
+                   id="historySearch"
+                   class="form-control"
+                   placeholder="Imię, nazwisko, PESEL lub nazwa badania">
+
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <label for="statusFilter"
+                 class="form-label fw-semibold">
+            Status wyniku
+          </label>
+
+          <select id="statusFilter"
+                  class="form-select">
+
+            <option value="ALL">Wszystkie</option>
+            <option value="NORMAL">Prawidłowe</option>
+            <option value="ABNORMAL">Nieprawidłowe</option>
+
+          </select>
+        </div>
+
+        <div class="col-lg-3">
+          <label for="sortFilter"
+                 class="form-label fw-semibold">
+            Sortowanie
+          </label>
+
+          <select id="sortFilter"
+                  class="form-select">
+
+            <option value="NEWEST">Od najnowszych</option>
+            <option value="OLDEST">Od najstarszych</option>
+
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+      <h2 class="h5 mb-0">
+        Zapisane wyniki
+      </h2>
+
+      <div class="results-count">
+        Widocznych:
+
+        <span id="visibleCount"
+              th:text="${liczbaWynikow}">
+                    0
+                </span>
+      </div>
+
+    </div>
+
+    <div th:if="${#lists.isEmpty(wyniki)}"
+         class="empty-state">
+
+      <i class="fa-solid fa-flask-vial"></i>
+
+      <h3 class="h5">
+        Brak zapisanych wyników
+      </h3>
+
+      <p class="mb-0">
+        Po zapisaniu pierwszego badania pojawi się ono w tym miejscu.
+      </p>
+
+    </div>
+
+    <div id="resultsList"
+         th:unless="${#lists.isEmpty(wyniki)}">
+
+      <article th:each="wynik : ${wyniki}"
+               class="result-card"
+               th:classappend="${wynik.flagaNieprawidlowy} ? ' abnormal' : ' normal'"
+               th:attr="
+                        data-search=${(
+                            wynik.pacjent.imie + ' ' +
+                            wynik.pacjent.nazwisko + ' ' +
+                            wynik.pacjent.pesel + ' ' +
+                            wynik.badanieRodzaj.nazwa + ' ' +
+                            wynik.badanieRodzaj.kodBadania
+                        ).toLowerCase()},
+                        data-status=${wynik.flagaNieprawidlowy ? 'ABNORMAL' : 'NORMAL'},
+                        data-date=${wynik.dataWykonania}">
+
+        <div class="row g-3 align-items-center">
+
+          <div class="col-lg-3">
+
+            <div class="meta-label">
+              Pacjent
+            </div>
+
+            <div class="patient-name"
+                 th:text="${wynik.pacjent.imie + ' ' + wynik.pacjent.nazwisko}">
+              Jan Kowalski
+            </div>
+
+            <small class="text-secondary">
+              PESEL:
+
+              <span th:text="${wynik.pacjent.pesel}">
+                                00000000000
+                            </span>
+            </small>
+
+          </div>
+
+          <div class="col-lg-3">
+
+            <div class="meta-label">
+              Badanie
+            </div>
+
+            <div class="test-name"
+                 th:text="${wynik.badanieRodzaj.nazwa}">
+              Nazwa badania
+            </div>
+
+            <small class="text-secondary"
+                   th:text="${wynik.badanieRodzaj.kodBadania}">
+              KOD
+            </small>
+
+          </div>
+
+          <div class="col-lg-2">
+
+            <div class="meta-label">
+              Wynik
+            </div>
+
+            <div class="result-value">
+
+                            <span th:text="${wynik.wartoscLiczbowa}">
+                                0
+                            </span>
+
+              <small class="fs-6 fw-normal text-secondary"
+                     th:text="${wynik.jednostka}">
+                jednostka
+              </small>
+
+            </div>
+          </div>
+
+          <div class="col-lg-2">
+
+            <div class="meta-label">
+              Data wykonania
+            </div>
+
+            <div class="fw-semibold"
+                 th:text="${#temporals.format(wynik.dataWykonania, 'dd.MM.yyyy HH:mm')}">
+              01.01.2026 12:00
+            </div>
+
+          </div>
+
+          <div class="col-lg-2 text-lg-end">
+
+            <div class="mb-2">
+
+                            <span th:if="${wynik.flagaNieprawidlowy}"
+                                  class="status-badge status-abnormal">
+
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                Nieprawidłowy
+                            </span>
+
+              <span th:unless="${wynik.flagaNieprawidlowy}"
+                    class="status-badge status-normal">
+
+                                <i class="fa-solid fa-circle-check"></i>
+                                Prawidłowy
+                            </span>
+
+            </div>
+
+            <a th:href="@{/historia-badan/{id}(id=${wynik.id})}"
+               href="#"
+               class="btn btn-details">
+
+              <i class="fa-solid fa-eye me-2"></i>
+              Wyświetl
+            </a>
+
+          </div>
+
+        </div>
+      </article>
+
+    </div>
+
+    <div id="noSearchResults"
+         class="empty-state d-none">
+
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      <h3 class="h5">
+        Brak pasujących wyników
+      </h3>
+
+      <p class="mb-0">
+        Zmień wyszukiwaną frazę lub ustawienia filtrów.
+      </p>
+
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+  const searchInput = document.getElementById("historySearch");
+  const statusFilter = document.getElementById("statusFilter");
+  const sortFilter = document.getElementById("sortFilter");
+
+  const resultsList = document.getElementById("resultsList");
+  const visibleCount = document.getElementById("visibleCount");
+  const normalCount = document.getElementById("normalCount");
+  const abnormalCount = document.getElementById("abnormalCount");
+  const noSearchResults = document.getElementById("noSearchResults");
+
+  function getCards() {
+      if (!resultsList) {
+          return [];
+      }
+
+      return Array.from(
+          resultsList.querySelectorAll(".result-card")
+      );
+  }
+
+  function updateSummary() {
+      const cards = getCards();
+
+      const normalResults = cards.filter(function (card) {
+          return card.dataset.status === "NORMAL";
+      });
+
+      const abnormalResults = cards.filter(function (card) {
+          return card.dataset.status === "ABNORMAL";
+      });
+
+      normalCount.textContent = normalResults.length;
+      abnormalCount.textContent = abnormalResults.length;
+  }
+
+  function filterAndSortResults() {
+      const cards = getCards();
+
+      if (cards.length === 0) {
+          visibleCount.textContent = "0";
+          return;
+      }
+
+      const phrase = searchInput.value
+          .trim()
+          .toLowerCase();
+
+      const selectedStatus = statusFilter.value;
+      const selectedSort = sortFilter.value;
+
+      cards.sort(function (firstCard, secondCard) {
+          const firstDate = new Date(firstCard.dataset.date);
+          const secondDate = new Date(secondCard.dataset.date);
+
+          if (selectedSort === "OLDEST") {
+              return firstDate - secondDate;
+          }
+
+          return secondDate - firstDate;
+      });
+
+      cards.forEach(function (card) {
+          resultsList.appendChild(card);
+      });
+
+      let numberOfVisibleCards = 0;
+
+      cards.forEach(function (card) {
+          const matchesSearch =
+              phrase === "" ||
+              card.dataset.search.includes(phrase);
+
+          const matchesStatus =
+              selectedStatus === "ALL" ||
+              card.dataset.status === selectedStatus;
+
+          const shouldBeVisible =
+              matchesSearch && matchesStatus;
+
+          card.classList.toggle(
+              "d-none",
+              !shouldBeVisible
+          );
+
+          if (shouldBeVisible) {
+              numberOfVisibleCards++;
+          }
+      });
+
+      visibleCount.textContent =
+          String(numberOfVisibleCards);
+
+      noSearchResults.classList.toggle(
+          "d-none",
+          numberOfVisibleCards !== 0
+      );
+  }
+
+  searchInput.addEventListener(
+      "input",
+      filterAndSortResults
+  );
+
+  statusFilter.addEventListener(
+      "change",
+      filterAndSortResults
+  );
+
+  sortFilter.addEventListener(
+      "change",
+      filterAndSortResults
+  );
+
+  updateSummary();
+  filterAndSortResults();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
