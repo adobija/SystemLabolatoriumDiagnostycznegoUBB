@@ -63,6 +63,10 @@ public class WynikBadania {
         this.pacjent = pacjent;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public BadanieRodzaj getBadanieRodzaj() {
         return badanieRodzaj;
     }
