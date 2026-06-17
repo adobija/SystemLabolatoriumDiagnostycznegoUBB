@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS LogZdarzen;
 DROP TABLE IF EXISTS Wynik_Badania;
 DROP TABLE IF EXISTS ZleceniePozycja;
-DROP TABLE IF EXISTS ZlecenieBadania;
+DROP TABLE IF EXISTS Zlecenie_Badania;
 DROP TABLE IF EXISTS Probka;
 DROP TABLE IF EXISTS Badanie_Rodzaj;
 DROP TABLE IF EXISTS SprzetLaboratoryjny;
@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS Lekarz;
 DROP TABLE IF EXISTS Pacjent;
 DROP TABLE IF EXISTS Uzytkownik;
 DROP TABLE IF EXISTS Rola;
-DROP TABLE IF EXISTS StatusZlecenia;
+DROP TABLE IF EXISTS Status_Zlecenia;
 DROP TABLE IF EXISTS StatusPozycji;
 DROP TABLE IF EXISTS TypZdarzenia;
 DROP TABLE IF EXISTS Typ_Materialu;
@@ -29,7 +29,7 @@ CREATE TABLE Plec (
     opis VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE StatusZlecenia (
+CREATE TABLE Status_Zlecenia (
     id_status_zlecenia IDENTITY PRIMARY KEY,
     kod VARCHAR(20) NOT NULL UNIQUE,
     opis VARCHAR(100) NOT NULL
@@ -150,7 +150,7 @@ CREATE TABLE Probka (
 );
 
 
-CREATE TABLE ZlecenieBadania (
+CREATE TABLE Zlecenie_Badania (
     id_zlecenia IDENTITY PRIMARY KEY,
     id_pacjenta BIGINT NOT NULL,
     id_lekarza BIGINT NOT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE ZlecenieBadania (
     CONSTRAINT fk_zlecenie_lekarz
         FOREIGN KEY (id_lekarza) REFERENCES Lekarz(id_lekarza),
     CONSTRAINT fk_zlecenie_status
-        FOREIGN KEY (id_status_zlecenia) REFERENCES StatusZlecenia(id_status_zlecenia)
+        FOREIGN KEY (id_status_zlecenia) REFERENCES Status_Zlecenia(id_status_zlecenia)
 );
 
 CREATE TABLE ZleceniePozycja (
@@ -172,7 +172,7 @@ CREATE TABLE ZleceniePozycja (
     id_probki BIGINT,
     id_status_pozycji BIGINT NOT NULL,
     CONSTRAINT fk_pozycja_zlecenie
-        FOREIGN KEY (id_zlecenia) REFERENCES ZlecenieBadania(id_zlecenia),
+        FOREIGN KEY (id_zlecenia) REFERENCES Zlecenie_Badania(id_zlecenia),
     CONSTRAINT fk_pozycja_badanie
         FOREIGN KEY (id_badania_rodzaj) REFERENCES Badanie_Rodzaj(id_badania_rodzaj),
     CONSTRAINT fk_pozycja_probka
@@ -209,7 +209,7 @@ CREATE TABLE Wynik_Badania (
 
     CONSTRAINT fk_wynik_zlecenie
         FOREIGN KEY (id_zlecenia)
-        REFERENCES ZlecenieBadania(id_zlecenia),
+        REFERENCES Zlecenie_Badania(id_zlecenia),
 
     CONSTRAINT fk_wynik_uzytkownik
         FOREIGN KEY (wykonane_przez)
@@ -238,7 +238,7 @@ INSERT INTO Plec (kod, opis) VALUES
  ('F', 'Kobieta'),
  ('X', 'Inna / niepodana');
 
-INSERT INTO StatusZlecenia (kod, opis) VALUES
+INSERT INTO Status_Zlecenia (kod, opis) VALUES
  ('NOWE', 'Nowe zlecenie'),
  ('W_TRAKCIE', 'Zlecenie w trakcie realizacji'),
  ('ZAKONCZONE', 'Zlecenie zakończone');
@@ -453,7 +453,7 @@ INSERT INTO Probka (kod_probki, id_typ_materialu, data_pobrania, miejsce_pobrani
  ('PRB-003', 2, CURRENT_TIMESTAMP, 'Punkt pobrań', 6, 8);
 
 
-INSERT INTO ZlecenieBadania (id_pacjenta, id_lekarza, data_zlecenia, id_status_zlecenia, uwagi_kliniczne) VALUES
+INSERT INTO Zlecenie_Badania (id_pacjenta, id_lekarza, data_zlecenia, id_status_zlecenia, uwagi_kliniczne) VALUES
  (4, 3, CURRENT_TIMESTAMP, 1, 'Kontrola po infekcji'),
  (5, 7, CURRENT_TIMESTAMP, 2, 'Podejrzenie cukrzycy'),
  (6, 8, CURRENT_TIMESTAMP, 1, 'Badania profilaktyczne');
