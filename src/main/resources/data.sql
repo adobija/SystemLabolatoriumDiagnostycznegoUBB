@@ -465,10 +465,10 @@ INSERT INTO ZleceniePozycja (id_zlecenia, id_badania_rodzaj, id_probki, id_statu
  (3, 3, 3, 1);  -- CRP dla pacjenta 6
 
 
-INSERT INTO Wynik_Badania
-(
+INSERT INTO Wynik_Badania (
     id_pacjenta,
     id_badania_rodzaj,
+    id_zlecenia,
     wartosc_liczbowa,
     wartosc_opisowa,
     jednostka,
@@ -478,17 +478,16 @@ INSERT INTO Wynik_Badania
     komentarz_diagnosty
 )
 VALUES
-(
-    4,
-    1,
-    6.50,
-    'W normie',
-    '10^9/L',
-    FALSE,
-    CURRENT_TIMESTAMP,
-    2,
-    'Wynik prawidłowy.'
-);
+    (4, 1, NULL, 6.50, 'W normie', '10^9/L', FALSE, TIMESTAMP '2026-06-17 22:17:04.507027', 2, 'Wynik prawidłowy.'),
+    (4, 1, NULL, 14.00, CONCAT('Materiał oceniono jako odpowiedni do wykonania oznaczenia.', CHAR(10), CHAR(10), 'Pomiar wykonano zgodnie z obowiązującą procedurą.', CHAR(10), CHAR(10), 'Uwagi do wyniku:'), 'g/dL', FALSE, TIMESTAMP '2026-06-17 22:18:18.511854', 2, CONCAT('Materiał został oceniony jako odpowiedni do wykonania oznaczeń.', CHAR(10), CHAR(10), 'Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.', CHAR(10), CHAR(10), 'Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.', CHAR(10), CHAR(10), 'Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.', CHAR(10), CHAR(10), 'Uwagi dodatkowe:')),
+    (4, 2, NULL, 24.00, CONCAT('Materiał oceniono jako odpowiedni do wykonania oznaczenia.', CHAR(10), CHAR(10), 'Pomiar wykonano zgodnie z obowiązującą procedurą.', CHAR(10), CHAR(10), 'Uwagi do wyniku:'), 'mln/µL', TRUE, TIMESTAMP '2026-06-17 22:18:18.537137', 2, CONCAT('Materiał został oceniony jako odpowiedni do wykonania oznaczeń.', CHAR(10), CHAR(10), 'Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.', CHAR(10), CHAR(10), 'Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.', CHAR(10), CHAR(10), 'Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.', CHAR(10), CHAR(10), 'Uwagi dodatkowe:')),
+    (4, 3, NULL, 12.00, CONCAT('Materiał oceniono jako odpowiedni do wykonania oznaczenia.', CHAR(10), CHAR(10), 'Pomiar wykonano zgodnie z obowiązującą procedurą.', CHAR(10), CHAR(10), 'Uwagi do wyniku:'), 'tys./µL', TRUE, TIMESTAMP '2026-06-17 22:18:18.540138', 2, CONCAT('Materiał został oceniony jako odpowiedni do wykonania oznaczeń.', CHAR(10), CHAR(10), 'Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.', CHAR(10), CHAR(10), 'Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.', CHAR(10), CHAR(10), 'Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.', CHAR(10), CHAR(10), 'Uwagi dodatkowe:')),
+    (4, 4, NULL, 13.00, CONCAT('Materiał oceniono jako odpowiedni do wykonania oznaczenia.', CHAR(10), CHAR(10), 'Pomiar wykonano zgodnie z obowiązującą procedurą.', CHAR(10), CHAR(10), 'Uwagi do wyniku:'), 'tys./µL', TRUE, TIMESTAMP '2026-06-17 22:18:18.542654', 2, CONCAT('Materiał został oceniony jako odpowiedni do wykonania oznaczeń.', CHAR(10), CHAR(10), 'Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.', CHAR(10), CHAR(10), 'Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.', CHAR(10), CHAR(10), 'Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.', CHAR(10), CHAR(10), 'Uwagi dodatkowe:')),
+    (4, 5, NULL, 1222.00, CONCAT('Materiał oceniono jako odpowiedni do wykonania oznaczenia.', CHAR(10), CHAR(10), 'Pomiar wykonano zgodnie z obowiązującą procedurą.', CHAR(10), CHAR(10), 'Uwagi do wyniku:'), '%', TRUE, TIMESTAMP '2026-06-17 22:18:18.546166', 2, CONCAT('Materiał został oceniony jako odpowiedni do wykonania oznaczeń.', CHAR(10), CHAR(10), 'Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.', CHAR(10), CHAR(10), 'Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.', CHAR(10), CHAR(10), 'Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.', CHAR(10), CHAR(10), 'Uwagi dodatkowe:')),
+    (4, 6, NULL, 99.00, CONCAT('Materiał oceniono jako odpowiedni do wykonania oznaczenia.', CHAR(10), CHAR(10), 'Pomiar wykonano zgodnie z obowiązującą procedurą.', CHAR(10), CHAR(10), 'Uwagi do wyniku:'), 'mg/dL', FALSE, TIMESTAMP '2026-06-17 22:18:18.548165', 2, CONCAT('Materiał został oceniony jako odpowiedni do wykonania oznaczeń.', CHAR(10), CHAR(10), 'Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.', CHAR(10), CHAR(10), 'Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.', CHAR(10), CHAR(10), 'Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.', CHAR(10), CHAR(10), 'Uwagi dodatkowe:')),
+    (4, 7, NULL, 2.00, CONCAT('Materiał oceniono jako odpowiedni do wykonania oznaczenia.', CHAR(10), CHAR(10), 'Pomiar wykonano zgodnie z obowiązującą procedurą.', CHAR(10), CHAR(10), 'Uwagi do wyniku:'), 'mg/L', FALSE, TIMESTAMP '2026-06-17 22:18:18.550168', 2, CONCAT('Materiał został oceniony jako odpowiedni do wykonania oznaczeń.', CHAR(10), CHAR(10), 'Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.', CHAR(10), CHAR(10), 'Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.', CHAR(10), CHAR(10), 'Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.', CHAR(10), CHAR(10), 'Uwagi dodatkowe:')),
+    (4, 8, NULL, 21.00, CONCAT('Materiał oceniono jako odpowiedni do wykonania oznaczenia.', CHAR(10), CHAR(10), 'Pomiar wykonano zgodnie z obowiązującą procedurą.', CHAR(10), CHAR(10), 'Uwagi do wyniku:'), 'mm/h', TRUE, TIMESTAMP '2026-06-17 22:18:18.552679', 2, CONCAT('Materiał został oceniony jako odpowiedni do wykonania oznaczeń.', CHAR(10), CHAR(10), 'Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.', CHAR(10), CHAR(10), 'Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.', CHAR(10), CHAR(10), 'Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.', CHAR(10), CHAR(10), 'Uwagi dodatkowe:')),
+    (4, 9, NULL, 1.00, CONCAT('Materiał oceniono jako odpowiedni do wykonania oznaczenia.', CHAR(10), CHAR(10), 'Pomiar wykonano zgodnie z obowiązującą procedurą.', CHAR(10), CHAR(10), 'Uwagi do wyniku:'), 'mg/dL', FALSE, TIMESTAMP '2026-06-17 22:18:18.556188', 2, CONCAT('Materiał został oceniony jako odpowiedni do wykonania oznaczeń.', CHAR(10), CHAR(10), 'Badania wykonano zgodnie z obowiązującymi procedurami laboratoryjnymi.', CHAR(10), CHAR(10), 'Uzyskane wyniki należy interpretować z uwzględnieniem obrazu klinicznego pacjenta.', CHAR(10), CHAR(10), 'Wyniki oznaczone jako nieprawidłowe wymagają oceny przez lekarza prowadzącego.', CHAR(10), CHAR(10), 'Uwagi dodatkowe:'));
 
 
 INSERT INTO LogZdarzen (id_uzytkownika, data_zdarzenia, id_typ_zdarzenia, opis) VALUES

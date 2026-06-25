@@ -19,6 +19,17 @@ public interface WynikiRepo
             String email
     );
 
+    List<WynikBadania>
+    findAllByIdInOrderByDataWykonaniaDesc(
+            List<Long> ids
+    );
+
+    List<WynikBadania>
+    findByIdInAndPacjent_Uzytkownik_EmailOrderByDataWykonaniaDesc(
+            List<Long> ids,
+            String email
+    );
+
     Optional<WynikBadania>
     findByIdAndPacjent_Uzytkownik_Email(
             Long id,

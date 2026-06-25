@@ -245,13 +245,12 @@
           Powrót
         </a>
 
-        <button type="button"
-                class="btn btn-download"
-                disabled>
+        <a th:href="@{/historia-badan/{id}/pdf(id=${wynik.id})}"
+           class="btn btn-download">
 
           <i class="fa-solid fa-file-pdf me-2"></i>
           Pobierz PDF
-        </button>
+        </a>
 
       </div>
 
